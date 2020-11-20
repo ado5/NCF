@@ -21,11 +21,7 @@ steps:
   inputs:
     restoreSolution: '$(solution)'
 
-- task: UseDotNet@2
-  inputs:
-    packageType: 'sdk'
-    useGlobalJson: true
-    workingDirectory: 'src/Senparc.Web'
+
 
 - task: VSBuild@1
   inputs:
@@ -33,6 +29,12 @@ steps:
     msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(build.artifactStagingDirectory)\WebApp.zip" /p:DeployIisAppPath="Default Web Site"'
     platform: '$(buildPlatform)'
     configuration: '$(buildConfiguration)'
+    
+- task: UseDotNet@2
+  inputs:
+    packageType: 'sdk'
+    useGlobalJson: true
+    workingDirectory: 'src/Senparc.Web'
 
 - task: DotNetCoreCLI@2
   inputs:
